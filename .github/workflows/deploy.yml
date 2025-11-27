@@ -10,6 +10,13 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     
+    # يجب إضافة هذه الأذونات (Permissions) لمنح روبوت GitHub Actions
+    # حق الكتابة والدفع إلى فرع gh-pages، مما يحل خطأ 403.
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -19,19 +26,22 @@ jobs:
         with:
           # تم التعديل إلى '20' لتلبية متطلبات Next.js 16
           node-version: '20'
-          # تم إزالة سطر 'cache: 'npm'' لحل مشكلة عدم وجود ملف القفل
+          # تم إزالة cache: 'npm' لحل مشكلة عدم وجود ملف القفل
       
       - name: Install dependencies
         # استخدام 'npm install' لضمان التثبيت بدون ملف قفل
         run: npm install
       
       - name: Build Next.js project
+        # يقوم هذا الأمر بتشغيل "next build" لإنشاء مجلد "out"
         run: npm run build
       
       - name: Deploy to GitHub Pages
+        # يستخدم أكشن مخصص للنشر على GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # مجلد النشر لمشاريع Next.js المصدرة ساكناً
           publish_dir: ./out
-          # تم إزالة سطر 'cname'
+          # تم إزالة cname: your-domain.com
