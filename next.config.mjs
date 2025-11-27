@@ -1,4 +1,4 @@
-const nextConfig = {
+Const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -6,7 +6,8 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'export',
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  // يجب تعديل هذا السطر
+  basePath: '/soqedemo',
   trailingSlash: true,
   reactStrictMode: true,
 }
