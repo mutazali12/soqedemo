@@ -17,7 +17,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          # تم التعديل إلى '20' لتلبية متطلبات Next.js 16
+          node-version: '20'
           # تم إزالة سطر 'cache: 'npm'' لحل مشكلة عدم وجود ملف القفل
       
       - name: Install dependencies
